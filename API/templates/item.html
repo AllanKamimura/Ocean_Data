@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>Item Details</title>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+	<h1>Date: {{ date }}</h1>
+    <h1>Coordenadas: ({{ lat }}, {{ lon }})</h1>
+	<figure>
+	<img src="../map/figura1.jpg" alt = "map_image">
+	</figure>
+	<form method="post">
+    <input type="lat" name="num" value= {{ lat }}>
+	<input type="lon" name="num" value={{ lon }}>
+	<input type="lon" name="num" value={{ date }}>
+    <input type="submit">
+		
+</form>
+</body>
+</html>

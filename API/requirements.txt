@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+aiofiles
+jinja2
+numpy
+pandas
+tensorflow-cpu
+kaleido
