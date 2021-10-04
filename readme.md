@@ -23,3 +23,6 @@ params:
 
 #### Data JSON
 `http://127.0.0.1:8000/data/?lat=-23.96083&lon=-46.33361&date=2021-10-08`
+
+## How to train the model
+`https://colab.research.google.com/github/AllanKamimura/Ocean_Data/blob/main/model_train.ipynb`
