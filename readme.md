@@ -12,10 +12,14 @@
 `uvicorn main:app --reload`
 
 ### Request Example
+params:
+1.  latitude [-90:90]
+
+2.  longitude [-180:180]
+
+3.  date [YYYY-MM-DD]
+#### Map
 `http://127.0.0.1:8000/map/?lat=-23.96083&lon=-46.33361&date=2021-10-08`
 
-latitude [-90:90]
-
-longitude [-180:180]
-
-data [YYYY-MM-DD]
+#### Data JSON
+`http://127.0.0.1:8000/data/?lat=-23.96083&lon=-46.33361&date=2021-10-08`

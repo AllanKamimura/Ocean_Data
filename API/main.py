@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 import tensorflow as tf
 import plotly.express as px
 import plotly.graph_objects as go
@@ -23,7 +22,7 @@ def load_model():
 	return model
 model = load_model()
 
-def draw_map(lat, lon, date):
+def get_data(lat, lon, date):
 	month = int(date[5:7])
 	test_lat = np.array([lat]) / 90
 	test_lon = np.array([lon + 180]) / 360
@@ -46,11 +45,14 @@ def draw_map(lat, lon, date):
 		test_lon = prev_lon
 
 	test_df = {"lat": np.array(pred_lat) * 90,
-			   "lon": np.array(pred_lon) * 360 - 180,
-			   "size": np.arange(10),
-			   "name": ["{}".format(month) for month in np.arange(10)]}
+			   "lon": np.array(pred_lon) * 360 - 180}
+	
+	return test_df
 
+def draw_map(test_df):
 	fig = go.Figure(layout = dict(height = 600, width = 800))
+	test_df["size"] = np.array([num for num in range(10)])
+	test_df["name"] = ["{}".format(month) for month in np.arange(10)]
 
 	fig.add_trace(go.Scattergeo(
 		lat = test_df["lat"],
@@ -93,13 +95,17 @@ def read_root():
 async def read_item(lat: float, lon: float):
 	return lat, lon
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-	return {"item_id": item_id, "q": q}
+@app.get("/data/")
+def read_item(request: Request, lat: float, lon: float, date: str):
+	test_df = get_data(lat, lon, date)
+	str_lat = list(test_df["lat"])
+	str_lon = list(test_df["lon"])
+	return {"lat": str_lat, "lon": str_lon}
 
 @app.get("/map/", response_class=HTMLResponse)
 async def read_item(request: Request, lat: float, lon: float, date: str):
-	draw_map(lat, lon, date)
+	test_df = get_data(lat, lon, date)
+	draw_map(test_df)
 	return templates.TemplateResponse("item.html", {"request": request, 
 													"lat": lat,
 													"lon": lon,
